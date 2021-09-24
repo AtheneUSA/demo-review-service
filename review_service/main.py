@@ -1,3 +1,5 @@
+import asyncio
+import random
 from typing import Optional
 from pydantic.fields import Field
 from sqlmodel.sql.expression import select
@@ -25,6 +27,8 @@ class ReviewCreate(ReviewBase):
 class ReviewRead(ReviewBase):
     id: int
 
+random.seed()
+
 settings = Settings()
 app = FastAPI()
 
@@ -51,6 +55,11 @@ async def create_review(review: ReviewCreate, session: Session = Depends(get_db_
 async def list_reviews(isbn: str, session: Session = Depends(get_db_session)):
     statement = select(Review).where(Review.isbn == isbn)
     reviews = session.exec(statement).all()
+    # Add random latency for demo purposes
+    if random.randrange(10) == 0:
+        await asyncio.sleep(5)
+    else:
+        await asyncio.sleep(random.gauss(0.2, 0.08))
     return reviews
 
 def start():
