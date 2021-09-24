@@ -1,5 +1,5 @@
 # Project specific files
-database.db
+reviews.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
