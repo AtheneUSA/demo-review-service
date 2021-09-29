@@ -91,6 +91,17 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "ecs-logging"
+version = "1.0.2"
+description = "Logging formatters for ECS (Elastic Common Schema) in Python"
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.extras]
+develop = ["pytest", "pytest-cov", "mock", "structlog", "elastic-apm"]
+
+[[package]]
 name = "elastic-apm"
 version = "6.4.0"
 description = "The official Python module for Elastic APM"
@@ -126,6 +137,17 @@ all = ["requests (>=2.24.0,<3.0.0)", "aiofiles (>=0.5.0,<0.6.0)", "jinja2 (>=2.1
 dev = ["python-jose[cryptography] (>=3.3.0,<4.0.0)", "passlib[bcrypt] (>=1.7.2,<2.0.0)", "autoflake (>=1.3.1,<2.0.0)", "flake8 (>=3.8.3,<4.0.0)", "uvicorn[standard] (>=0.12.0,<0.14.0)", "graphene (>=2.1.8,<3.0.0)"]
 doc = ["mkdocs (>=1.1.2,<2.0.0)", "mkdocs-material (>=7.1.9,<8.0.0)", "mdx-include (>=1.4.1,<2.0.0)", "mkdocs-markdownextradata-plugin (>=0.1.7,<0.2.0)", "typer-cli (>=0.0.12,<0.0.13)", "pyyaml (>=5.3.1,<6.0.0)"]
 test = ["pytest (>=6.2.4,<7.0.0)", "pytest-cov (>=2.12.0,<3.0.0)", "pytest-asyncio (>=0.14.0,<0.15.0)", "mypy (==0.812)", "flake8 (>=3.8.3,<4.0.0)", "black (==20.8b1)", "isort (>=5.0.6,<6.0.0)", "requests (>=2.24.0,<3.0.0)", "httpx (>=0.14.0,<0.15.0)", "email_validator (>=1.1.1,<2.0.0)", "sqlalchemy (>=1.3.18,<1.4.0)", "peewee (>=3.13.3,<4.0.0)", "databases[sqlite] (>=0.3.2,<0.4.0)", "orjson (>=3.2.1,<4.0.0)", "ujson (>=4.0.1,<5.0.0)", "async_exit_stack (>=1.0.1,<2.0.0)", "async_generator (>=1.10,<2.0.0)", "python-multipart (>=0.0.5,<0.0.6)", "aiofiles (>=0.5.0,<0.6.0)", "flask (>=1.1.2,<2.0.0)"]
+
+[[package]]
+name = "fastapi-health"
+version = "0.4.0"
+description = "Heath check on FastAPI applications."
+category = "main"
+optional = false
+python-versions = ">=3.6.1,<4.0.0"
+
+[package.dependencies]
+fastapi = ">=0.63.0"
 
 [[package]]
 name = "greenlet"
@@ -497,7 +519,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "5fa0cb1d294dcb070c5c0326d91b2a3fab4cab39df03b8b2a9ec08387407e3a5"
+content-hash = "7c17762b62b49a27c32f3d2e14734580a754a3b259705633b0eba9c220ba9e6d"
 
 [metadata.files]
 asgiref = [
@@ -528,6 +550,10 @@ colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
     {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
+ecs-logging = [
+    {file = "ecs-logging-1.0.2.tar.gz", hash = "sha256:6697e6926686b399becc7ecb7aca27e2e58c942ab31e4ae0843b26f4526b096b"},
+    {file = "ecs_logging-1.0.2-py2.py3-none-any.whl", hash = "sha256:c4f15a283c48f5950c3cf10261c0b6839f6ab5cf021550bd983a3a2074ed81c2"},
+]
 elastic-apm = [
     {file = "elastic-apm-6.4.0.tar.gz", hash = "sha256:f2450f0b8cb80de1ce4da7a76586134d6a1f747992031085e04fbd48d83ddef2"},
     {file = "elastic_apm-6.4.0-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:49e5005ff5d5b4a225b23a385cc211cf23103ce0a52c88a0f8b1083eda6c78da"},
@@ -544,6 +570,10 @@ elastic-apm = [
 fastapi = [
     {file = "fastapi-0.68.1-py3-none-any.whl", hash = "sha256:94d2820906c36b9b8303796fb7271337ec89c74223229e3cfcf056b5a7d59e23"},
     {file = "fastapi-0.68.1.tar.gz", hash = "sha256:644bb815bae326575c4b2842469fb83053a4b974b82fa792ff9283d17fbbd99d"},
+]
+fastapi-health = [
+    {file = "fastapi-health-0.4.0.tar.gz", hash = "sha256:a0781b2359732d50cddda1195784f78950265c6b3689d7a1e6e65a21aed4d6a5"},
+    {file = "fastapi_health-0.4.0-py3-none-any.whl", hash = "sha256:d6c1795f7596009cffa7a84d5a67a6b66bbf9d6ce79b040fd50601ed5392089f"},
 ]
 greenlet = [
     {file = "greenlet-1.1.1-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:476ba9435afaead4382fbab8f1882f75e3fb2285c35c9285abb3dd30237f9142"},

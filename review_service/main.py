@@ -1,9 +1,12 @@
 import asyncio
 import random
 import uvicorn
+import logging
 
 from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
 from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi_health import health
 from pydantic import BaseSettings
 from pydantic.fields import Field
 from sqlmodel import Field, SQLModel, Session, create_engine
@@ -38,10 +41,25 @@ class ReviewRead(ReviewBase):
 
 random.seed()
 
+logging.config.fileConfig("logging.conf", disable_existing_loggers=True)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
 settings = Settings()
 apm = make_apm_client()
 app = FastAPI()
 app.add_middleware(ElasticAPM, client=apm)
+
+origins = [
+    "*",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 connect_args = {"check_same_thread": False}
 engine = create_engine(settings.database_uri, echo=True, connect_args=connect_args)
@@ -51,6 +69,15 @@ def get_db_session():
     with Session(engine) as session:
         yield session
 
+def is_database_online(session: Session = Depends(get_db_session)):
+    try:
+        session.execute('SELECT 1')
+    except Exception:
+        return False
+    return True
+
+
+app.add_api_route("/healthz", health([is_database_online]))
 
 @app.get("/")
 async def read_root():
