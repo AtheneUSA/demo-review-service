@@ -69,15 +69,17 @@ def get_db_session():
     with Session(engine) as session:
         yield session
 
+
 def is_database_online(session: Session = Depends(get_db_session)):
     try:
-        session.execute('SELECT 1')
+        session.execute("SELECT 1")
     except Exception:
         return False
     return True
 
 
 app.add_api_route("/healthz", health([is_database_online]))
+
 
 @app.get("/")
 async def read_root():
