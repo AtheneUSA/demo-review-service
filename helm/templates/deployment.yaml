@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  revisionHistoryLimit: 5
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: review-service
+      app.kubernetes.io/instance: review-service
+  template:
+    metadata:
+      annotations:
+        co.elastic.logs.review-service/enabled: "true"
+        co.elastic.logs.review-service/json.add_error_key: "true"
+        co.elastic.logs.review-service/json.keys_under_root: "true"
+        com.onintranet.elk/service_id: "c02fe809-89f3-49f6-8973-5b0e06c11424"
+      labels:
+        app.kubernetes.io/name: review-service
+        app.kubernetes.io/instance: review-service
+        app.kubernetes.io/version: {{ .Chart.AppVersion }}
+        app.kubernetes.io/component: api
+        app.kubernetes.io/part-of: demo-microservice
+        app.kubernetes.io/managed-by: helm
+        env: {{ .Values.environment }}
+        snow.athene.com/business-owner: John_Hicklin
+        snow.athene.com/it-owner: Ethan_Harstad
+        snow.athene.com/app-support-group: SMR-TechnicalServices
+        snow.athene.com/business-code: "67333"
+        snow.athene.com/project-billing-code: BAU
+        snow.athene.com/business_criticality: "4"
+    spec:
+      containers:
+      - name: review-service
+        image: athenedtr-non-prod.artifactory.onintranet.com/microservices-demo/review-service:{{ .Chart.AppVersion }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ELASTIC_APM_ENABLED
+          value: {{ .Values.apm.enabled | quote }}
+        - name: ELASTIC_APM_ENVIRONMENT
+          value: {{ .Values.environment | quote }}
+        - name: ELASTIC_APM_LOG_ECS_FORMATTING
+          value: {{ .Values.apm.log.ecsFormatting | quote }}
+        - name: ELASTIC_APM_LOG_FILE
+          value: {{ .Values.apm.log.file | quote }}
+        - name: ELASTIC_APM_LOG_FILE_SIZE
+          value: {{ .Values.apm.log.fileSize | quote }}
+        - name: ELASTIC_APM_LOG_LEVEL
+          value: {{ .Values.apm.log.level | quote }}
+        - name: ELASTIC_APM_LOG_RECORDING
+          value: {{ .Values.apm.log.recording | quote }}
+        - name: ELASTIC_APM_SERVER_URL
+          value: {{ .Values.apm.serverUrl | quote }}
+        - name: ELASTIC_APM_SERVICE_NAME
+          value: review-service
+        - name: ELASTIC_APM_VERIFY_SERVER_CERT
+          value: {{ .Values.apm.verifyServerCert | quote }}
+        ports:
+        - name: http
+          containerPort: 8000
+          protocol: TCP
+        livenessProbe:
+          initialDelaySeconds: 15
+          periodSeconds: 15
+          httpGet:
+            path: /healthz
+            port: http
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          httpGet:
+            path: /healthz
+            port: http
+        resources:
+          limits:
+            cpu: 200m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
