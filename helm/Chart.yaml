@@ -2,5 +2,5 @@ CgapiVersion: v2
 name: review-service
 description: A demo microservice
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: "b7b1418"

@@ -80,6 +80,11 @@ def is_database_online(session: Session = Depends(get_db_session)):
     return True
 
 
+@app.on_event("startup")
+def on_startup():
+    SQLModel.metadata.create_all(engine)
+
+
 app.add_api_route("/healthz", health([is_database_online]))
 
 

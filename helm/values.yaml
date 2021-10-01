@@ -1,5 +1,6 @@
 echoSql: False
 rootPath: /api/review-service
+databaseUri: sqlite:////app/data/reviews.db
 
 apm:
   enabled: "true"
