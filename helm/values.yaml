@@ -4,7 +4,7 @@ databaseUri: sqlite:////app/data/reviews.db
 
 apm:
   enabled: "true"
-  serverUrl: "https://elk.onintranet.com:8200"
+  serverUrl: "https://elk-dev.k8s.onintranet.com:8200"
   verifyServerCert: "false"
   log:
     ecsFormatting: "off"
