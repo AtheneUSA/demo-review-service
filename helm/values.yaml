@@ -3,15 +3,15 @@ rootPath: /api/review-service
 databaseUri: sqlite:////app/data/reviews.db
 
 apm:
-  enabled: "true"
-  serverUrl: "https://elk-dev.k8s.onintranet.com:8200"
-  verifyServerCert: "false"
+  enabled: 'true'
+  serverUrl: 'https://elk.onintranet.com:8200'
+  verifyServerCert: 'false'
   log:
-    ecsFormatting: "off"
-    file: "demo-review-service.log"
-    fileSize: "16mb"
-    level: "info"
-    recording: "true"
+    ecsFormatting: 'off'
+    file: 'demo-review-service.log'
+    fileSize: '16mb'
+    level: 'info'
+    recording: 'true'
 
 service:
   type: ClusterIP
